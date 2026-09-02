@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: http://localhost:3000/sitemap.xml
+Sitemap: https://personal-portfolio-teal-eight-52.vercel.app/sitemap.xml

@@ -8,7 +8,7 @@ export const siteConfig = {
   location: "Bengaluru, India",
   description:
     "Darshan BS — Backend Engineer specializing in high-throughput distributed systems with Java, Spring Boot, Apache Kafka, and MySQL. Architecting in-house platforms scaling to 300K–500K daily transactions.",
-  url: "http://localhost:3000",
+  url: "https://personal-portfolio-teal-eight-52.vercel.app",
   links: {
     twitter: "",
     github: "",
