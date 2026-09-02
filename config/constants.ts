@@ -60,7 +60,13 @@ export type ValidSkills =
   | "FastAPI"
   | "SQL"
   | "NoSQL"
-  | "Framer Motion";
+  | "Framer Motion"
+  | "Apache Kafka"
+  | "Spring Data JPA"
+  | "REST APIs"
+  | "Microservices"
+  | "Event-Driven Architecture"
+  | "JUnit";
 
 export type ValidCategory =
   | "Full Stack"

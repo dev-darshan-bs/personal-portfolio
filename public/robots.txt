@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://nbarkiya.xyz/sitemap.xml 
+Sitemap: http://localhost:3000/sitemap.xml

@@ -16,9 +16,18 @@ export default function ContributonsPage() {
       title={pagesConfig.contributions.title}
       description={pagesConfig.contributions.description}
     >
-      <ContributionCard
-        contributions={contributionsUnsorted}
-      />
+      {contributionsUnsorted.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <h3 className="text-xl font-semibold text-foreground mb-2">
+            No public contributions listed yet
+          </h3>
+          <p className="text-muted-foreground text-sm">
+            I currently focus on production backend systems at DTDC Express.
+          </p>
+        </div>
+      ) : (
+        <ContributionCard contributions={contributionsUnsorted} />
+      )}
     </PageContainer>
   );
 }

@@ -9,152 +9,102 @@ export interface skillsInterface {
 
 export const skillsUnsorted: skillsInterface[] = [
   {
-    name: "Next.js",
+    name: "Java",
     description:
-      "Effortlessly build dynamic apps with routing, layouts, loading UI, and API routes.",
+      "Build production backend services with strong typing, concurrency, and JVM performance.",
     rating: 5,
-    icon: Icons.nextjs,
+    icon: Icons.java,
   },
   {
-    name: "React",
+    name: "Spring Boot",
     description:
-      "Craft interactive user interfaces using components, state, props, and virtual DOM.",
+      "Ship modular REST services, managed transactions, and production-ready Java applications.",
     rating: 5,
-    icon: Icons.react,
+    icon: Icons.springboot,
   },
   {
-    name: "GraphQL",
+    name: "Apache Kafka",
     description:
-      "Fetch data precisely with a powerful query language for APIs and runtime execution.",
-    rating: 4,
-    icon: Icons.graphql,
-  },
-  {
-    name: "Nest.js",
-    description:
-      "Create scalable and modular applications with a progressive Node.js framework.",
-    rating: 4,
-    icon: Icons.nestjs,
-  },
-  {
-    name: "express.js",
-    description:
-      "Build web applications and APIs quickly using a fast, unopinionated Node.js framework.",
+      "Design high-throughput event streams that decouple ingestion from downstream processing.",
     rating: 5,
-    icon: Icons.express,
-  },
-  {
-    name: "Node.js",
-    description:
-      "Run JavaScript on the server side, enabling dynamic and responsive applications.",
-    rating: 5,
-    icon: Icons.nodejs,
-  },
-  {
-    name: "MongoDB",
-    description:
-      "Store and retrieve data seamlessly with a flexible and scalable NoSQL database.",
-    rating: 5,
-    icon: Icons.mongodb,
-  },
-  {
-    name: "Typescript",
-    description:
-      "Enhance JavaScript with static types, making code more understandable and reliable.",
-    rating: 5,
-    icon: Icons.typescript,
-  },
-  {
-    name: "Javascript",
-    description:
-      "Create interactive and dynamic web experiences with the versatile scripting language.",
-    rating: 5,
-    icon: Icons.javascript,
-  },
-  {
-    name: "HTML 5",
-    description:
-      "Structure web content beautifully with the latest version of HyperText Markup Language.",
-    rating: 4,
-    icon: Icons.html5,
-  },
-  {
-    name: "CSS 3",
-    description:
-      "Style web pages creatively with the latest iteration of Cascading Style Sheets.",
-    rating: 4,
-    icon: Icons.css3,
-  },
-  {
-    name: "React Native",
-    description:
-      "Develop cross-platform mobile apps using React for consistent and engaging experiences.",
-    rating: 4,
-    icon: Icons.react,
-  },
-  {
-    name: "Angular",
-    description:
-      "Build dynamic web apps with a TypeScript-based open-source framework by Google.",
-    rating: 3,
-    icon: Icons.angular,
-  },
-  {
-    name: "Redux",
-    description:
-      "Manage app state effectively using a predictable and centralized state container.",
-    rating: 4,
-    icon: Icons.redux,
-  },
-  {
-    name: "Socket.io",
-    description:
-      "Enable real-time, bidirectional communication between clients and servers effortlessly.",
-    rating: 3,
-    icon: Icons.socketio,
-  },
-  {
-    name: "Material UI",
-    description:
-      "Create stunning and responsive UIs with a popular React UI framework.",
-    rating: 4,
-    icon: Icons.mui,
-  },
-
-  {
-    name: "Tailwind CSS",
-    description:
-      "Design beautiful, modern websites faster with a utility-first CSS framework.",
-    rating: 5,
-    icon: Icons.tailwindcss,
-  },
-  {
-    name: "AWS",
-    description:
-      "Utilize Amazon Web Services to build and deploy scalable, reliable, and secure applications.",
-    rating: 3,
-    icon: Icons.amazonaws,
-  },
-  {
-    name: "Bootstrap",
-    description:
-      "Quickly create responsive and appealing web designs using a popular CSS framework.",
-    rating: 2,
-    icon: Icons.bootstrap,
+    icon: Icons.kafka,
   },
   {
     name: "MySQL",
     description:
-      "Manage and organize relational databases efficiently for data-driven applications.",
-    rating: 2,
+      "Model transactional data with integrity across rate estimation, wallets, and order persistence.",
+    rating: 5,
     icon: Icons.mysql,
   },
   {
-    name: "Netlify",
+    name: "Redis",
     description:
-      "Manage and organize relational databases efficiently for data-driven applications.",
+      "Add low-latency caching and resilient state for high-volume booking and billing flows.",
     rating: 4,
-    icon: Icons.netlify,
+    icon: Icons.redis,
+  },
+  {
+    name: "AWS",
+    description:
+      "Integrate Secrets Manager, S3, and cloud services into secure production backends.",
+    rating: 4,
+    icon: Icons.amazonaws,
+  },
+  {
+    name: "SQL",
+    description:
+      "Query and shape relational data for reporting, reconciliation, and service APIs.",
+    rating: 4,
+    icon: Icons.mysql,
+  },
+  {
+    name: "Python",
+    description:
+      "Write scripts and supporting tooling around data pipelines and backend automation.",
+    rating: 3,
+    icon: Icons.python,
+  },
+  {
+    name: "Jenkins",
+    description:
+      "Automate CI/CD so backend changes ship with tests and repeatable deployments.",
+    rating: 4,
+    icon: Icons.jenkins,
+  },
+  {
+    name: "JUnit",
+    description:
+      "Keep services reliable with unit tests and Mockito, targeting 85%+ coverage.",
+    rating: 4,
+    icon: Icons.junit,
+  },
+  {
+    name: "REST APIs",
+    description:
+      "Design asynchronous, low-latency HTTP APIs for order ingestion and downstream systems.",
+    rating: 5,
+    icon: Icons.link,
+  },
+  {
+    name: "Microservices",
+    description:
+      "Split capabilities across services while keeping contracts clear and failure isolated.",
+    rating: 4,
+    icon: Icons.gitOrgBuilding,
+  },
+  {
+    name: "Event-Driven Architecture",
+    description:
+      "Use events to keep booking, publishing, and billing flows fault-tolerant under peak load.",
+    rating: 5,
+    icon: Icons.zap,
+  },
+  {
+    name: "Spring Data JPA",
+    description:
+      "Persist domain models with Spring-managed transactions and consistent data access.",
+    rating: 4,
+    icon: Icons.springboot,
   },
 ];
 

@@ -21,12 +21,10 @@ import { siteConfig } from "@/config/site";
 import { featuredSkills } from "@/config/skills";
 import { getFeaturedBlogs } from "@/lib/blogs";
 import { cn } from "@/lib/utils";
-import profileImg from "@/public/profile-img.jpg";
 
 export const metadata: Metadata = {
   title: `${pagesConfig.home.metadata.title}`,
-  description:
-    "Naman Barkiya - Applied AI Engineer working at the intersection of AI, data, and scalable software systems. Explore my projects, experience, and contributions.",
+  description: siteConfig.description,
   alternates: {
     canonical: siteConfig.url,
   },
@@ -41,27 +39,23 @@ export default function IndexPage() {
     name: siteConfig.authorName,
     url: siteConfig.url,
     image: siteConfig.ogImage,
-    jobTitle: "Applied AI Engineer",
-    sameAs: [siteConfig.links.github, siteConfig.links.twitter],
-  };
-
-  // Structured data for website as a software application (template)
-  const softwareSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Next.js Portfolio Template",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+    jobTitle: siteConfig.jobTitle,
+    email: siteConfig.email,
+    telephone: siteConfig.phone,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Bengaluru",
+      addressCountry: "IN",
     },
-    author: {
-      "@type": "Person",
-      name: siteConfig.authorName,
-      url: siteConfig.url,
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "The National Institute of Engineering",
     },
+    worksFor: {
+      "@type": "Organization",
+      name: "DTDC Express",
+    },
+    sameAs: [siteConfig.links.github, siteConfig.links.twitter].filter(Boolean),
   };
 
   return (
@@ -71,41 +65,38 @@ export default function IndexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <Script
-        id="schema-software"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
-
       <section className="space-y-6 pb-8 pt-6 mb-0 md:pb-12 md:py-20 lg:py-32 h-screen flex items-center">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center -mt-20">
           <Image
-            src={profileImg}
-            height={100}
-            width={100}
+            src="/profile-monogram.svg"
+            height={256}
+            width={256}
             sizes="100vw"
             className="bg-primary rounded-full mb-0 h-auto md:mb-2 w-[60%] max-w-[16rem] border-8 border-primary"
-            alt="Naman Barkiya - Applied AI Engineer Portfolio"
+            alt="Darshan BS - Backend Engineer Portfolio"
             priority
+            unoptimized
           />
           <AnimatedText
             as="h1"
             delay={0.2}
             className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Naman Barkiya
+            Darshan BS
           </AnimatedText>
           <AnimatedText
             as="h3"
             delay={0.4}
             className="font-heading text-base sm:text-xl md:text-xl lg:text-2xl"
           >
-            Applied AI Engineer
+            Backend Engineer
           </AnimatedText>
           <div className="mt-4 max-w-[42rem] text-center">
             <p className="leading-normal text-muted-foreground text-sm sm:text-base">
-              Software engineer working at the intersection of AI, data, and
-              scalable software systems.
+              Backend engineer with 2 years of experience in high-throughput
+              distributed systems using Java, Spring Boot, Apache Kafka, and
+              MySQL. Building in-house platforms at DTDC Express that scale to
+              300K–500K daily transactions.
             </p>
           </div>
 
@@ -130,7 +121,7 @@ export default function IndexPage() {
                     size: "lg",
                   })
                 )}
-                aria-label="Contact Naman Barkiya"
+                aria-label="Contact Darshan BS"
               >
                 <Icons.contact className="w-4 h-4 mr-2" /> Contact
               </Link>
@@ -203,7 +194,7 @@ export default function IndexPage() {
             {pagesConfig.experience.description}
           </AnimatedText>
         </div>
-        <div className="mx-auto grid justify-center gap-4 md:w-full lg:grid-cols-3">
+        <div className="mx-auto grid justify-center gap-4 md:w-full md:grid-cols-2">
           {experiences.slice(0, 3).map((experience, index) => (
             <AnimatedSection
               key={experience.id}
@@ -222,6 +213,7 @@ export default function IndexPage() {
           </Link>
         </AnimatedText>
       </AnimatedSection>
+      {featuredContributions.length > 0 && (
       <AnimatedSection
         direction="up"
         className="container space-y-6 bg-muted py-10 my-14"
@@ -251,6 +243,8 @@ export default function IndexPage() {
           </Link>
         </AnimatedText>
       </AnimatedSection>
+      )}
+      {featuredBlogs.length > 0 && (
       <AnimatedSection
         direction="up"
         className="container space-y-6 py-10 my-14"
@@ -291,6 +285,7 @@ export default function IndexPage() {
           </Link>
         </AnimatedText>
       </AnimatedSection>
+      )}
       <AnimatedSection
         direction="up"
         className="container space-y-6 bg-muted py-10 my-14"

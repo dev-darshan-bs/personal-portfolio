@@ -10,15 +10,12 @@ import CustomTooltip from "@/components/ui/custom-tooltip";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { cn, formatDateFromObj } from "@/lib/utils";
-import profileImg from "@/public/profile-img.jpg";
 
 interface ProjectPageProps {
   params: Promise<{
     projectId: string;
   }>;
 }
-
-const githubUsername = "namanbarkiya";
 
 export default async function Project({ params }: ProjectPageProps) {
   const { projectId } = await params;
@@ -67,25 +64,23 @@ export default async function Project({ params }: ProjectPageProps) {
         </h1>
         <ChipContainer textArr={project.category} />
         <div className="mt-4 flex space-x-4">
-          <Link
-            href={siteConfig.links.github}
-            className="flex items-center space-x-2 text-sm"
-          >
+          <div className="flex items-center space-x-2 text-sm">
             <Image
-              src={profileImg}
-              alt={"naman"}
+              src="/profile-monogram.svg"
+              alt={siteConfig.authorName}
               width={42}
               height={42}
               className="rounded-full bg-background"
+              unoptimized
             />
 
             <div className="flex-1 text-left leading-tight">
-              <p className="font-medium">{"Naman Barkiya"}</p>
+              <p className="font-medium">{siteConfig.authorName}</p>
               <p className="text-[12px] text-muted-foreground">
-                @{siteConfig.username}
+                {siteConfig.jobTitle}
               </p>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
 

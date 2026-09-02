@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Naman Barkiya | Applied AI Engineer",
-    short_name: "Naman Barkiya",
+    name: "Darshan BS | Backend Engineer",
+    short_name: "Darshan BS",
     description:
-      "Naman Barkiya - Applied AI Engineer working at the intersection of AI, data, and scalable software systems.",
+      "Darshan BS - Backend Engineer specializing in high-throughput distributed systems with Java, Spring Boot, Apache Kafka, and MySQL.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
@@ -25,11 +25,10 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     categories: [
       "portfolio",
-      "ai",
+      "backend",
       "software engineering",
-      "machine learning",
+      "java",
       "developer",
-      "web development",
     ],
     lang: "en",
     dir: "ltr",

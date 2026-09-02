@@ -1,4 +1,5 @@
 import { Icons } from "@/components/common/icons";
+import { siteConfig } from "@/config/site";
 
 interface SocialInterface {
   name: string;
@@ -9,27 +10,15 @@ interface SocialInterface {
 
 export const SocialLinks: SocialInterface[] = [
   {
-    name: "Github",
-    username: "@namanbarkiya",
-    icon: Icons.gitHub,
-    link: "https://github.com/namanbarkiya",
-  },
-  {
-    name: "LinkedIn",
-    username: "Naman Barkiya",
-    icon: Icons.linkedin,
-    link: "https://www.linkedin.com/in/namanbarkiya",
-  },
-  {
-    name: "Twitter",
-    username: "@namanbarkiya",
-    icon: Icons.twitter,
-    link: "https://twitter.com/namanbarkiya",
-  },
-  {
     name: "Gmail",
-    username: "naman.barkiya02",
+    username: siteConfig.email,
     icon: Icons.gmail,
-    link: "mailto:naman.barkiya02@gmail.com",
+    link: `mailto:${siteConfig.email}`,
+  },
+  {
+    name: "Phone",
+    username: siteConfig.phone,
+    icon: Icons.contact,
+    link: `tel:${siteConfig.phone.replace(/\s+/g, "")}`,
   },
 ];
