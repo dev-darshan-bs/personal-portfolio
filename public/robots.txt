@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://personal-portfolio-teal-eight-52.vercel.app/sitemap.xml
+Sitemap: https://darshan-bs-dev-folio.vercel.app/sitemap.xml
