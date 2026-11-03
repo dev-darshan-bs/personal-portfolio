@@ -1,58 +1,62 @@
 import { Metadata } from "next";
 
-import PageContainer from "@/components/common/page-container";
-import ProjectCard from "@/components/projects/project-card";
-import { ResponsiveTabs } from "@/components/ui/responsive-tabs";
+import { Footer } from "@/components/core/footer";
+import {
+  EntryGrid,
+  EntryPage,
+  EntryRow,
+  FeaturedEntry,
+  SkeletonEntry,
+} from "@/components/layouts/entry";
 import { pagesConfig } from "@/config/pages";
-import { Projects } from "@/config/projects";
+import { ProjectInterface, Projects } from "@/config/projects";
+import { siteConfig } from "@/config/site";
+import { formatYearRange } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: pagesConfig.projects.metadata.title,
   description: pagesConfig.projects.metadata.description,
+  alternates: {
+    canonical: `${siteConfig.url}/projects`,
+  },
 };
 
-const renderContent = (tabVal: string) => {
-  let projectArr = Projects;
-  if (tabVal === "personal") {
-    projectArr = projectArr.filter((val) => val.type === "Personal");
-  } else if (tabVal === "professional") {
-    projectArr = projectArr.filter((val) => val.type === "Professional");
-  }
-
-  return (
-    <div className="mx-auto my-4 grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3 static items-stretch">
-      {projectArr.map((project) => (
-        <ProjectCard project={project} key={project.id} />
-      ))}
-    </div>
-  );
-};
+function toEntry(project: ProjectInterface) {
+  return {
+    href: `/projects/${project.id}`,
+    label: formatYearRange(project.startDate, project.endDate),
+    title: project.companyName,
+    abstract: project.shortDescription,
+    cta: "View project",
+    meta: `${project.type} · ${project.category.join(", ")}`,
+    tag: project.techStack[0],
+    image: {
+      src: project.companyLogoImg as string,
+      alt: `${project.companyName} architecture overview`,
+      width: 1400,
+      height: 820,
+    },
+  };
+}
 
 export default function ProjectsPage() {
-  const tabItems = [
-    {
-      value: "all",
-      label: "All",
-      content: renderContent("all"),
-    },
-    {
-      value: "personal",
-      label: "Personal",
-      content: renderContent("personal"),
-    },
-    {
-      value: "professional",
-      label: "Professional",
-      content: renderContent("professional"),
-    },
-  ];
+  const [featured, ...rest] = Projects;
+  const skeletonCount = Math.max(0, 2 - rest.length);
 
   return (
-    <PageContainer
-      title={pagesConfig.projects.title}
-      description={pagesConfig.projects.description}
-    >
-      <ResponsiveTabs items={tabItems} defaultValue="all" />
-    </PageContainer>
+    <EntryPage>
+      <EntryGrid
+        heading={pagesConfig.projects.title}
+        featured={featured ? <FeaturedEntry {...toEntry(featured)} /> : undefined}
+      >
+        {rest.map((project, index) => (
+          <EntryRow key={project.id} index={index} {...toEntry(project)} />
+        ))}
+        {Array.from({ length: skeletonCount }).map((_, index) => (
+          <SkeletonEntry key={index} index={rest.length + index} />
+        ))}
+      </EntryGrid>
+      <Footer />
+    </EntryPage>
   );
 }

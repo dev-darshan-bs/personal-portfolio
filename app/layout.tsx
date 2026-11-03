@@ -1,36 +1,34 @@
 import "./globals.css";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Inter as FontSans } from "next/font/google";
-import localFont from "next/font/local";
+import type { Metadata, Viewport } from "next";
+import { Montserrat } from "next/font/google";
 
 import { Analytics } from "@/components/common/analytics";
 import { ThemeProvider } from "@/components/common/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { VisuallyHidden } from "@/components/core/visually-hidden";
+import { Navbar } from "@/components/navbar/navbar";
 import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
-import { ModalProvider } from "@/providers/modal-provider";
+import styles from "./layout.module.css";
 
-const fontSans = FontSans({
+// Geometric sans in the spirit of Gotham, which the reference design uses.
+const fontGotham = Montserrat({
   subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-// Font files can be colocated inside of `pages`
-const fontHeading = localFont({
-  src: "../assets/fonts/CalSans-SemiBold.woff2",
-  variable: "--font-heading",
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-gotham",
+  display: "block",
 });
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    template: `%s | ${siteConfig.authorName}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
@@ -95,37 +93,37 @@ export const metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#111111",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({ children }: RootLayoutProps) {
   const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontHeading.variable
-        )}
-      >
+    <html lang="en" className={fontGotham.variable} suppressHydrationWarning>
+      <body>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          themes={[
-            "light",
-            "dark",
-            "retro",
-            "cyberpunk",
-            "paper",
-            "aurora",
-            "synthwave",
-          ]}
+          attribute="data-theme"
+          defaultTheme="dark"
+          enableSystem={false}
+          themes={["dark", "light"]}
         >
-          {children}
+          <VisuallyHidden
+            showOnFocus
+            as="a"
+            className={styles.skip}
+            href="#main-content"
+          >
+            Skip to main content
+          </VisuallyHidden>
+          <Navbar />
+          <main id="main-content" className={styles.container} tabIndex={-1}>
+            {children}
+          </main>
           <Analytics />
-          <Toaster />
-          <ModalProvider />
         </ThemeProvider>
       </body>
       {GA_ID ? <GoogleAnalytics gaId={GA_ID} /> : null}

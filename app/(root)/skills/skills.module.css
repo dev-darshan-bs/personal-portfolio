@@ -1,0 +1,121 @@
+@keyframes cardIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--spaceXL), 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spaceL);
+
+  @media (max-width: 1040px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 696px) {
+    grid-template-columns: 100%;
+    gap: var(--spaceM);
+  }
+}
+
+.card {
+  --cardBorder: color-mix(in lab, var(--text) 14%, transparent);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spaceM);
+  padding: var(--spaceXL);
+  background: var(--backgroundLight);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+  opacity: 0;
+  transition: background var(--durationM) ease;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: cardIn var(--durationXL) var(--bezierFastoutSlowin) var(--delay) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 1px var(--cardBorder);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: scale3d(0, 1, 1);
+    transform-origin: right;
+    transition: transform var(--durationM) var(--bezierFastoutSlowin);
+  }
+
+  &:hover::after {
+    transform: scale3d(1, 1, 1);
+    transform-origin: left;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spaceM);
+}
+
+.icon {
+  color: var(--primary);
+  flex: 0 0 auto;
+}
+
+.ratingLabel {
+  font-size: var(--fontSizeBodyXS);
+  font-weight: var(--fontWeightMedium);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--textLight);
+}
+
+.name {
+  margin-top: var(--spaceS);
+}
+
+.description {
+  flex: 1 1 auto;
+}
+
+.rating {
+  display: flex;
+  gap: var(--spaceXS);
+  margin-top: var(--spaceS);
+}
+
+.ratingBar {
+  width: 24px;
+  height: 4px;
+  background: color-mix(in lab, var(--text) 15%, transparent);
+
+  &[data-filled="true"] {
+    background: var(--primary);
+  }
+}

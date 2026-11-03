@@ -1,20 +1,11 @@
-export const routesConfig: any = {
-  mainNav: [
-    {
-      title: "Projects",
-      href: "/projects",
-    },
-    {
-      title: "Experience",
-      href: "/experience",
-    },
-    {
-      title: "Skills",
-      href: "/skills",
-    },
-    {
-      title: "Contact",
-      href: "/contact",
-    },
-  ],
-};
+export interface NavLink {
+  label: string;
+  pathname: string;
+}
+
+export const navLinks: NavLink[] = [
+  { label: "Projects", pathname: "/projects" },
+  { label: "Experience", pathname: "/experience" },
+  { label: "Skills", pathname: "/skills" },
+  { label: "Contact", pathname: "/contact" },
+];

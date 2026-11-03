@@ -1,15 +1,24 @@
-import Image from "next/image";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import { Icons } from "@/components/common/icons";
-import ProjectDescription from "@/components/projects/project-description";
-import { buttonVariants } from "@/components/ui/button";
-import ChipContainer from "@/components/ui/chip-container";
-import CustomTooltip from "@/components/ui/custom-tooltip";
+import { Button } from "@/components/core/button";
+import { Footer } from "@/components/core/footer";
+import { List, ListItem } from "@/components/core/list";
+import {
+  ProjectContainer,
+  ProjectHeader,
+  ProjectImage,
+  ProjectSection,
+  ProjectSectionColumns,
+  ProjectSectionContent,
+  ProjectSectionHeading,
+  ProjectSectionText,
+  ProjectTags,
+  ProjectTextRow,
+} from "@/components/layouts/project";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
-import { cn, formatDateFromObj } from "@/lib/utils";
+import { formatDateRange } from "@/lib/utils";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -17,137 +26,126 @@ interface ProjectPageProps {
   }>;
 }
 
-export default async function Project({ params }: ProjectPageProps) {
+export function generateStaticParams() {
+  return Projects.map((project) => ({ projectId: project.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
   const { projectId } = await params;
-  let project = Projects.find((val) => val.id === projectId);
+  const project = Projects.find((val) => val.id === projectId);
+
   if (!project) {
-    redirect("/projects");
+    return { title: "Project not found" };
   }
 
+  return {
+    title: `${project.companyName} | Projects`,
+    description: project.shortDescription,
+    alternates: {
+      canonical: `${siteConfig.url}/projects/${projectId}`,
+    },
+  };
+}
+
+export default async function Project({ params }: ProjectPageProps) {
+  const { projectId } = await params;
+  const project = Projects.find((val) => val.id === projectId);
+
+  if (!project) {
+    notFound();
+  }
+
+  const roles = [
+    formatDateRange(project.startDate, project.endDate),
+    `${project.type} · ${project.category.join(", ")}`,
+  ];
+
+  const heroImage = project.companyLogoImg as string;
+
   return (
-    <article className="container relative max-w-3xl py-6 lg:py-10">
-      <Link
-        href="/projects"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-[-200px] top-14 hidden xl:inline-flex"
-        )}
-      >
-        <Icons.chevronLeft className="mr-2 h-4 w-4" />
-        All Projects
-      </Link>
-      <div>
-        <time
-          dateTime={Date.now().toString()}
-          className="block text-sm text-muted-foreground"
-        >
-          {formatDateFromObj(project.startDate)}
-        </time>
-        <h1 className="flex items-center justify-between mt-2 font-heading text-4xl leading-tight lg:text-5xl">
-          {project.companyName}
-          <div className="flex items-center">
-            {project.githubLink && (
-              <CustomTooltip text="Link to the source code.">
-                <Link href={project.githubLink} target="_blank">
-                  <Icons.gitHub className="w-6 ml-4 text-muted-foreground hover:text-foreground" />
-                </Link>
-              </CustomTooltip>
-            )}
-            {project.websiteLink && (
-              <CustomTooltip text="Please note that some project links may be temporarily unavailable.">
-                <Link href={project.websiteLink} target="_blank">
-                  <Icons.externalLink className="w-6 ml-4 text-muted-foreground hover:text-foreground " />
-                </Link>
-              </CustomTooltip>
-            )}
-          </div>
-        </h1>
-        <ChipContainer textArr={project.category} />
-        <div className="mt-4 flex space-x-4">
-          <div className="flex items-center space-x-2 text-sm">
-            <Image
-              src="/profile-monogram.svg"
-              alt={siteConfig.authorName}
-              width={42}
-              height={42}
-              className="rounded-full bg-background"
-              unoptimized
-            />
-
-            <div className="flex-1 text-left leading-tight">
-              <p className="font-medium">{siteConfig.authorName}</p>
-              <p className="text-[12px] text-muted-foreground">
-                {siteConfig.jobTitle}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Image
-        src={project.companyLogoImg}
-        alt={project.companyName}
-        width={720}
-        height={405}
-        className="my-8 rounded-md border bg-muted transition-colors"
-        priority
-      />
-
-      <div className="mb-7 ">
-        <h2 className="inline-block font-heading text-3xl leading-tight lg:text-3xl mb-2">
-          Tech Stack
-        </h2>
-        <ChipContainer textArr={project.techStack} />
-      </div>
-
-      <div className="mb-7 ">
-        <h2 className="inline-block font-heading text-3xl leading-tight lg:text-3xl mb-2">
-          Description
-        </h2>
-        {/* {<project.descriptionComponent />} */}
-        <ProjectDescription
-          paragraphs={project.descriptionDetails.paragraphs}
-          bullets={project.descriptionDetails.bullets}
+    <>
+      <ProjectContainer>
+        <ProjectHeader
+          title={project.companyName}
+          description={project.shortDescription}
+          url={project.websiteLink || project.githubLink}
+          linkLabel={project.websiteLink ? "Visit website" : "View source"}
+          roles={roles}
         />
-      </div>
-
-      <div className="mb-7 ">
-        <h2 className="inline-block font-heading text-3xl leading-tight lg:text-3xl mb-5">
-          Page Info
-        </h2>
-        {project.pagesInfoArr.map((page, ind) => (
-          <div key={ind}>
-            <h3 className="flex items-center font-heading text-xl leading-tight lg:text-xl mt-3">
-              <Icons.star className="h-5 w-5 mr-2" /> {page.title}
-            </h3>
-            <div>
-              <p>{page.description}</p>
-              {page.imgArr.map((img, ind) => (
-                <Image
-                  src={img}
-                  key={ind}
-                  alt={img}
-                  width={720}
-                  height={405}
-                  className="my-4 rounded-md border bg-muted transition-colors"
-                  priority
-                />
-              ))}
-            </div>
-          </div>
+        <ProjectSection padding="top">
+          <ProjectSectionContent>
+            <ProjectImage
+              raised
+              priority
+              src={heroImage}
+              width={1400}
+              height={820}
+              sizes="(max-width: 696px) 100vw, (max-width: 1040px) 800px, 1000px"
+              alt={`${project.companyName} architecture diagram`}
+            />
+          </ProjectSectionContent>
+        </ProjectSection>
+        <ProjectSection>
+          <ProjectTextRow>
+            <ProjectSectionHeading>Overview</ProjectSectionHeading>
+            {project.descriptionDetails.paragraphs.map((paragraph, index) => (
+              <ProjectSectionText key={index}>{paragraph}</ProjectSectionText>
+            ))}
+          </ProjectTextRow>
+        </ProjectSection>
+        <ProjectSection light>
+          <ProjectSectionColumns>
+            <ProjectTextRow justify="start" width="m">
+              <ProjectSectionHeading>Highlights</ProjectSectionHeading>
+              <ProjectSectionText as="div">
+                <List>
+                  {project.descriptionDetails.bullets.map((bullet, index) => (
+                    <ListItem key={index}>{bullet}</ListItem>
+                  ))}
+                </List>
+              </ProjectSectionText>
+            </ProjectTextRow>
+            <ProjectTextRow justify="start" width="s">
+              <ProjectSectionHeading>Tech stack</ProjectSectionHeading>
+              <ProjectTags tags={project.techStack} />
+            </ProjectTextRow>
+          </ProjectSectionColumns>
+        </ProjectSection>
+        {project.pagesInfoArr.map((page, index) => (
+          <ProjectSection key={index} padding={index === 0 ? "both" : "bottom"}>
+            <ProjectSectionContent>
+              <ProjectTextRow>
+                <ProjectSectionHeading>{page.title}</ProjectSectionHeading>
+                {page.description && (
+                  <ProjectSectionText>{page.description}</ProjectSectionText>
+                )}
+              </ProjectTextRow>
+              {page.imgArr
+                .filter((img) => img !== heroImage)
+                .map((img, imgIndex) => (
+                  <ProjectImage
+                    key={imgIndex}
+                    src={img}
+                    width={1400}
+                    height={820}
+                    sizes="(max-width: 696px) 100vw, (max-width: 1040px) 800px, 1000px"
+                    alt={`${page.title} — ${project.companyName}`}
+                  />
+                ))}
+            </ProjectSectionContent>
+          </ProjectSection>
         ))}
-      </div>
-
-      <hr className="mt-12" />
-      <div className="flex justify-center py-6 lg:py-10">
-        <Link
-          href="/projects"
-          className={cn(buttonVariants({ variant: "ghost" }))}
-        >
-          <Icons.chevronLeft className="mr-2 h-4 w-4" />
-          All Projects
-        </Link>
-      </div>
-    </article>
+        <ProjectSection padding="bottom">
+          <ProjectTextRow center>
+            <Button secondary iconHoverShift icon="arrow-left" href="/projects">
+              All projects
+            </Button>
+          </ProjectTextRow>
+        </ProjectSection>
+      </ProjectContainer>
+      <Footer />
+    </>
   );
 }

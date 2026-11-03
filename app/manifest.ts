@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Darshan BS - Backend Engineer specializing in high-throughput distributed systems with Java, Spring Boot, Apache Kafka, and MySQL.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#000000",
+    background_color: "#111111",
+    theme_color: "#111111",
     icons: [
       {
         src: "/favicon.ico",

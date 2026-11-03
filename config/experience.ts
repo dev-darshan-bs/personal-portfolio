@@ -1,7 +1,10 @@
 import { ValidSkills } from "./constants";
 
+export type ExperienceKind = "work" | "education";
+
 export interface ExperienceInterface {
   id: string;
+  kind: ExperienceKind;
   position: string;
   company: string;
   location: string;
@@ -17,13 +20,14 @@ export interface ExperienceInterface {
 export const experiences: ExperienceInterface[] = [
   {
     id: "dtdc",
+    kind: "work",
     position: "Software Engineer – Backend",
     company: "DTDC Express",
     location: "Bengaluru, India",
     startDate: new Date("2024-10-01"),
     endDate: "Present",
     description: [
-      "Architected a modular Spring Boot booking engine to bring the core booking platform in-house, scaling to 300K–500K daily bookings and boosting company margins by eliminating third-party vendor fees.",
+      "Devleoped a modular Spring Boot booking engine to bring the core booking platform in-house, scaling to 300K–500K daily bookings and boosting company margins by eliminating third-party vendor fees.",
       "Designed high-throughput asynchronous REST APIs and Kafka event streams, decoupling order ingestion from downstream publishing for fault tolerance and low latency under peak loads.",
       "Implemented resilient data layers using MySQL, Redis, and Spring-managed transactions so rate estimation, wallet validation, and order persistence stay atomic with zero data discrepancies.",
     ],
@@ -49,6 +53,7 @@ export const experiences: ExperienceInterface[] = [
   },
   {
     id: "nie",
+    kind: "education",
     position: "Bachelor of Engineering in Computer Science",
     company: "The National Institute of Engineering",
     location: "Mysuru, Karnataka",
@@ -66,3 +71,8 @@ export const experiences: ExperienceInterface[] = [
     companyUrl: "https://www.nie.ac.in",
   },
 ];
+
+export const workExperiences = experiences.filter((e) => e.kind === "work");
+export const educationExperiences = experiences.filter(
+  (e) => e.kind === "education"
+);

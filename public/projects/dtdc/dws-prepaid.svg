@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <rect width="1400" height="820" fill="#0b1220"/>
+  <text x="700" y="40" text-anchor="middle" fill="#f8fafc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">Prepaid differential — how a run works</text>
+  <text x="700" y="66" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Lock the run · retry failed debits · process a batch · never double-charge</text>
+
+  <!-- Triggers -->
+  <rect x="160" y="96" width="220" height="56" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="270" y="129" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">Cron trigger</text>
+  <rect x="420" y="96" width="220" height="56" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="530" y="129" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">Manual REST run</text>
+  <rect x="820" y="96" width="420" height="56" rx="8" fill="#111827" stroke="#334155"/>
+  <text x="1030" y="119" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Upstream already inserted audit rows</text>
+  <text x="1030" y="138" text-anchor="middle" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">this job only reads + updates status</text>
+  <path d="M270 152 L270 186" stroke="#64748b" stroke-width="2"/>
+  <path d="M530 152 L530 186" stroke="#64748b" stroke-width="2"/>
+  <path d="M270 186 L530 186" stroke="#64748b" stroke-width="2"/>
+  <path d="M400 186 L400 214" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Stage bar -->
+  <rect x="80" y="222" width="200" height="64" rx="8" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="180" y="248" text-anchor="middle" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">1. LOCK</text>
+  <text x="180" y="268" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">fail · exit (empty summary)</text>
+  <rect x="320" y="222" width="230" height="64" rx="8" fill="#0f172a" stroke="#fbbf24"/>
+  <text x="435" y="248" text-anchor="middle" fill="#fcd34d" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">2. DEBIT_RETRY</text>
+  <text x="435" y="268" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">DEBIT_FAILED · retry &lt; max</text>
+  <rect x="590" y="222" width="230" height="64" rx="8" fill="#0f172a" stroke="#a78bfa"/>
+  <text x="705" y="248" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">3. PROCESS</text>
+  <text x="705" y="268" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">IDENTIFIED · parallel batch</text>
+  <rect x="860" y="222" width="200" height="64" rx="8" fill="#0f172a" stroke="#34d399"/>
+  <text x="960" y="248" text-anchor="middle" fill="#6ee7b7" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">4. UNLOCK</text>
+  <text x="960" y="268" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">always (finally)</text>
+  <path d="M280 254 L320 254" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M550 254 L590 254" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M820 254 L860 254" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Per record pipeline -->
+  <text x="700" y="330" text-anchor="middle" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2">PER RECORD (own transaction · worker pool)</text>
+  <rect x="70" y="348" width="180" height="70" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="160" y="378" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Enrich log</text>
+  <text x="160" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">weight / dest / mode</text>
+  <rect x="290" y="348" width="150" height="70" rx="8" fill="#111827" stroke="#64748b"/>
+  <text x="365" y="378" text-anchor="middle" fill="#f87171" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">no change</text>
+  <text x="365" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">→ IGNORED</text>
+  <rect x="480" y="348" width="180" height="70" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="570" y="378" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Booking fill</text>
+  <text x="570" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">nulls from master</text>
+  <rect x="700" y="348" width="180" height="70" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="790" y="378" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Rate API</text>
+  <text x="790" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">revised amount</text>
+  <rect x="920" y="348" width="200" height="70" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="1020" y="378" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Differential</text>
+  <text x="1020" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">rate · original</text>
+  <rect x="1160" y="348" width="180" height="70" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="1250" y="378" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Threshold</text>
+  <text x="1250" y="398" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">&lt; 0.50 skip debit</text>
+  <path d="M250 383 L290 383" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M440 383 L480 383" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M660 383 L700 383" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M880 383 L920 383" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M1120 383 L1160 383" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Debit outcomes -->
+  <rect x="200" y="470" width="280" height="80" rx="8" fill="#0f172a" stroke="#34d399"/>
+  <text x="340" y="502" text-anchor="middle" fill="#6ee7b7" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">Wallet debit SUCCESS</text>
+  <text x="340" y="524" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">persist req/res JSON · insert ledger</text>
+  <rect x="560" y="470" width="280" height="80" rx="8" fill="#0f172a" stroke="#f87171"/>
+  <text x="700" y="502" text-anchor="middle" fill="#fca5a5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">Wallet debit FAIL</text>
+  <text x="700" y="524" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">retry_count++ · replay next run</text>
+  <rect x="920" y="470" width="280" height="80" rx="8" fill="#0f172a" stroke="#64748b"/>
+  <text x="1060" y="502" text-anchor="middle" fill="#cbd5e1" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">SKIPPED</text>
+  <text x="1060" y="524" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">below threshold · no HTTP debit</text>
+  <path d="M1250 418 L1250 450 L1060 450 L1060 470" stroke="#64748b" stroke-width="1.5" fill="none"/>
+  <path d="M1020 418 L1020 450 L340 450 L340 470" stroke="#34d399" stroke-width="1.5" fill="none"/>
+  <path d="M1020 440 L700 440 L700 470" stroke="#f87171" stroke-width="1.5" fill="none"/>
+
+  <!-- Status machine -->
+  <text x="700" y="590" text-anchor="middle" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2">STATUS MACHINE</text>
+  <rect x="80" y="610" width="160" height="48" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="160" y="640" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">IDENTIFIED</text>
+  <rect x="280" y="610" width="160" height="48" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="360" y="640" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">IGNORED</text>
+  <rect x="480" y="610" width="180" height="48" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="570" y="640" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">RATE_CALCULATED</text>
+  <rect x="700" y="610" width="160" height="48" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="780" y="640" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">DEBIT_FAILED</text>
+  <rect x="900" y="610" width="180" height="48" rx="8" fill="#1e293b" stroke="#34d399"/>
+  <text x="990" y="640" text-anchor="middle" fill="#6ee7b7" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">DEBIT_SUCCESS</text>
+  <rect x="1120" y="610" width="160" height="48" rx="8" fill="#1e293b" stroke="#f87171"/>
+  <text x="1200" y="640" text-anchor="middle" fill="#fca5a5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">EXCEPTION</text>
+
+  <text x="700" y="700" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Retry uses stored debit JSON, new RRN, run-scoped OAuth token — idempotent across overlapping jobs.</text>
+  <text x="700" y="728" text-anchor="middle" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Datasources: billing pool (audit + ledger) · ops pool (mismatch log + booking lookup)</text>
+  <text x="700" y="768" text-anchor="middle" fill="#475569" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Output: SchedulerRunSummary — ignored · processed · debit success / fail / skip · retries</text>
+
+  <defs>
+    <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#64748b"/>
+    </marker>
+  </defs>
+</svg>

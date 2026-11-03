@@ -40,7 +40,7 @@ export const pagesConfig: PagesConfig = {
   },
   contact: {
     title: "Contact",
-    description: "Let's connect about backend systems and engineering roles.",
+    description: "",
     metadata: {
       title: "Contact",
       description: "Contact Darshan BS.",
@@ -74,11 +74,11 @@ export const pagesConfig: PagesConfig = {
   },
   experience: {
     title: "Experience",
-    description: "Professional journey and career timeline.",
+    description: "Work history and education.",
     metadata: {
       title: "Experience",
       description:
-        "Darshan BS's professional journey and experience timeline.",
+        "Darshan BS's work history and education.",
     },
   },
 };

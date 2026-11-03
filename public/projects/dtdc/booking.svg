@@ -1,6 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0f172a"/>
-  <text x="600" y="280" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="28" letter-spacing="4">DTDC EXPRESS</text>
-  <text x="600" y="360" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="48" font-weight="700">Core Booking Platform</text>
-  <text x="600" y="430" text-anchor="middle" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="22">300K500K daily bookings � Spring Boot � MySQL � Redis</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <rect width="1400" height="820" fill="#0b1220"/>
+  <text x="700" y="42" text-anchor="middle" fill="#f8fafc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">High-throughput booking — how it is structured</text>
+  <text x="700" y="68" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Shared libraries once · deployables own only ingress · hybrid REST + Kafka</text>
+
+  <!-- Channels -->
+  <rect x="80" y="96" width="180" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="170" y="127" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">Channel clients</text>
+  <rect x="300" y="96" width="180" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="390" y="127" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">Partner APIs</text>
+  <rect x="920" y="96" width="200" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="1020" y="127" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">External integrators</text>
+  <path d="M170 148 L170 188" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M390 148 L390 188" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M1020 148 L1020 188" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Ingress -->
+  <rect x="60" y="196" width="1280" height="118" rx="12" fill="#111827" stroke="#334155"/>
+  <text x="84" y="222" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2">INGRESS (deployables)</text>
+  <rect x="90" y="236" width="280" height="58" rx="8" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="230" y="261" text-anchor="middle" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Sync REST API</text>
+  <text x="230" y="280" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">create / update · 201</text>
+  <rect x="420" y="236" width="280" height="58" rx="8" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="560" y="261" text-anchor="middle" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Async REST API</text>
+  <text x="560" y="280" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">accept → publish command</text>
+  <rect x="750" y="236" width="280" height="58" rx="8" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="890" y="261" text-anchor="middle" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Integration API</text>
+  <text x="890" y="280" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">map external contract → DTO</text>
+  <rect x="1070" y="236" width="240" height="58" rx="8" fill="#0f172a" stroke="#38bdf8"/>
+  <text x="1190" y="261" text-anchor="middle" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Document API</text>
+  <text x="1190" y="280" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">upload → object store</text>
+
+  <path d="M230 314 L230 348" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M560 314 L560 348" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M890 314 L890 348" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Shared core -->
+  <rect x="60" y="356" width="1280" height="132" rx="12" fill="#111827" stroke="#334155"/>
+  <text x="84" y="382" fill="#64748b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" letter-spacing="2">SHARED LIBRARIES (logic lives once)</text>
+  <rect x="90" y="398" width="220" height="68" rx="8" fill="#0f172a" stroke="#a78bfa"/>
+  <text x="200" y="428" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">commons</text>
+  <text x="200" y="448" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">errors · correlation ID</text>
+  <rect x="330" y="398" width="220" height="68" rx="8" fill="#0f172a" stroke="#a78bfa"/>
+  <text x="440" y="428" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">domain</text>
+  <text x="440" y="448" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">DTOs · entities · events</text>
+  <rect x="570" y="398" width="340" height="68" rx="8" fill="#0f172a" stroke="#a78bfa"/>
+  <text x="740" y="422" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">core</text>
+  <text x="740" y="444" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">validate → enrich → persist (tx)</text>
+  <rect x="930" y="398" width="380" height="68" rx="8" fill="#0f172a" stroke="#a78bfa"/>
+  <text x="1120" y="422" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">connectors</text>
+  <text x="1120" y="444" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">rate · wallet · inventory · tax docs</text>
+
+  <path d="M560 488 L560 522" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M740 488 L740 548" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Kafka -->
+  <rect x="380" y="530" width="360" height="70" rx="8" fill="#0f172a" stroke="#fbbf24"/>
+  <text x="560" y="558" text-anchor="middle" fill="#fcd34d" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">Kafka</text>
+  <text x="560" y="578" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">commands · booking.created · DLQ · key = consignment</text>
+
+  <path d="M560 600 L560 634" stroke="#fbbf24" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M740 600 L890 634" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="380" y="642" width="360" height="58" rx="8" fill="#0f172a" stroke="#fbbf24"/>
+  <text x="560" y="666" text-anchor="middle" fill="#fcd34d" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Command consumer</text>
+  <text x="560" y="684" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">manual ack · idempotent produce</text>
+  <rect x="780" y="642" width="360" height="58" rx="8" fill="#0f172a" stroke="#fbbf24"/>
+  <text x="960" y="666" text-anchor="middle" fill="#fcd34d" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Event transformer</text>
+  <text x="960" y="684" text-anchor="middle" fill="#94a3b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">fan-out to downstream ops APIs</text>
+
+  <!-- Infra -->
+  <rect x="90" y="730" width="200" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="190" y="761" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">MySQL master / slave</text>
+  <rect x="320" y="730" width="160" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="400" y="761" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Redis cache</text>
+  <rect x="510" y="730" width="240" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="630" y="761" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">AWS Secrets Manager</text>
+  <rect x="780" y="730" width="160" height="52" rx="8" fill="#1e293b" stroke="#64748b"/>
+  <text x="860" y="761" text-anchor="middle" fill="#e2e8f0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Object storage</text>
+  <path d="M190 700 L190 730" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M740 466 L190 730" stroke="#334155" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#64748b"/>
+    </marker>
+  </defs>
 </svg>

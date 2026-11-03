@@ -1,12 +1,18 @@
 import { Metadata } from "next";
 import Script from "next/script";
 
-import BlogCard from "@/components/blogs/blog-card";
-import { AnimatedSection } from "@/components/common/animated-section";
-import PageContainer from "@/components/common/page-container";
+import { Footer } from "@/components/core/footer";
+import {
+  EntryGrid,
+  EntryPage,
+  EntryRow,
+  FeaturedEntry,
+  SkeletonEntry,
+} from "@/components/layouts/entry";
 import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
-import { getAllBlogsMeta } from "@/lib/blogs";
+import { BlogMeta, getAllBlogsMeta } from "@/lib/blogs";
+import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: pagesConfig.blogs.metadata.title,
@@ -38,8 +44,26 @@ export const metadata: Metadata = {
   },
 };
 
+function toEntry(blog: BlogMeta) {
+  return {
+    href: `/blogs/${blog.slug}`,
+    label: formatDate(blog.date),
+    title: blog.title,
+    abstract: blog.description,
+    cta: "Read article",
+    meta: blog.readingTime ? `${blog.readingTime} min read` : undefined,
+    tag: blog.tags[0],
+    image: blog.coverImage
+      ? { src: blog.coverImage, alt: blog.title, width: 1200, height: 630 }
+      : undefined,
+  };
+}
+
 export default function BlogsPage() {
   const blogs = getAllBlogsMeta();
+  const featured = blogs.find((blog) => blog.featured) ?? blogs[0];
+  const rest = blogs.filter((blog) => blog !== featured);
+  const skeletonCount = Math.max(0, 2 - rest.length);
 
   // CollectionPage + Blog JSON-LD for the listing page
   const blogListSchema = {
@@ -86,17 +110,11 @@ export default function BlogsPage() {
     },
   };
 
-  // BreadcrumbList for site hierarchy
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteConfig.url,
-      },
+      { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
       {
         "@type": "ListItem",
         position: 2,
@@ -107,7 +125,7 @@ export default function BlogsPage() {
   };
 
   return (
-    <>
+    <EntryPage>
       <Script
         id="schema-blog-list"
         type="application/ld+json"
@@ -118,35 +136,18 @@ export default function BlogsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <PageContainer
-        title={pagesConfig.blogs.title}
-        description={pagesConfig.blogs.description}
+      <EntryGrid
+        heading="Latest articles"
+        featured={featured ? <FeaturedEntry {...toEntry(featured)} /> : undefined}
       >
-        {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 text-center">
-            <p className="text-4xl mb-4">✍️</p>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              No posts yet
-            </h3>
-            <p className="text-muted-foreground text-sm">
-              Check back soon — posts are coming.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-2">
-            {blogs.map((blog, index) => (
-              <AnimatedSection
-                key={blog.slug}
-                delay={0.05 * index}
-                direction="up"
-                className="h-full"
-              >
-                <BlogCard blog={blog} />
-              </AnimatedSection>
-            ))}
-          </div>
-        )}
-      </PageContainer>
-    </>
+        {rest.map((blog, index) => (
+          <EntryRow key={blog.slug} index={index} {...toEntry(blog)} />
+        ))}
+        {Array.from({ length: skeletonCount }).map((_, index) => (
+          <SkeletonEntry key={index} index={rest.length + index} />
+        ))}
+      </EntryGrid>
+      <Footer />
+    </EntryPage>
   );
 }

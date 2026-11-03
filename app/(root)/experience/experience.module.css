@@ -1,0 +1,20 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.section {
+  opacity: 0;
+  animation: fade-in 1s ease 0.6s forwards;
+}
+
+.list {
+  display: grid;
+  width: 100%;
+  max-width: var(--maxWidthM);
+}
