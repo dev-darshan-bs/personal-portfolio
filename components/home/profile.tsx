@@ -22,12 +22,8 @@ const ProfileText = ({ visible, titleId }: { visible: boolean; titleId: string }
       <DecoderText text="Hi there" start={visible} delay={500} />
     </Heading>
     <Text className={styles.description} data-visible={visible} size="l" as="p">
-      I’m Darshan, a backend engineer based in Bengaluru building the in-house
-      booking platform at{" "}
-      <Link href={siteConfig.companyUrl}>{siteConfig.company}</Link>. My work
-      centres on Java, Spring Boot and Kafka: high-throughput REST APIs, event
-      streams, and transactional data layers that stay consistent at 300K–500K
-      bookings a day. For the full picture, have a look at my{" "}
+      I’m Darshan, a Bengaluru-based Engineer at{" "}
+      <Link href={siteConfig.companyUrl}>{siteConfig.company}</Link>. I build the backend engines on Java, Spring Boot, and Kafka that power half a Million transactions daily. Low latency, high availability, zero excuses-engineered for peak scale. Dive into my {" "}
       <Link href="/experience">experience</Link> and{" "}
       <Link href="/skills">skills</Link>.
     </Text>
@@ -93,7 +89,7 @@ export const Profile = ({ id, visible, sectionRef }: ProfileProps) => {
                   cover
                   delay={100}
                   className={styles.profileImage}
-                  src="/profile-img.jpg"
+                  src="/profile_1.jpg"
                   width={960}
                   height={960}
                   sizes={`(max-width: ${media.mobile}px) 100vw, 480px`}

@@ -11,7 +11,7 @@ export const Footer = ({ className }: { className?: string }) => (
         {`© ${new Date().getFullYear()} ${siteConfig.authorName}.`}
       </span>
       <Link secondary className={styles.link} href="/contact">
-        Crafted by yours truly
+      
       </Link>
     </Text>
   </footer>

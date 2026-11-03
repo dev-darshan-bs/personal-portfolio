@@ -7,8 +7,8 @@ export const siteConfig = {
    * Hero intro: `role` is the fixed first line, `disciplines` rotate on the
    * second line ("Backend + Engineer", "Backend + Java", ...).
    */
-  role: "Backend",
-  disciplines: ["Engineer", "Java", "Kafka", "Spring Boot", "Systems"],
+  role: "Software Engineer",
+  disciplines: ["Java", "Spring Boot", "Kafka", "Systems Design", "Microservices", "Distributed System"],
   email: "darshanbs04@gmail.com",
   phone: "+91 9110442362",
   location: "Bengaluru, India",
